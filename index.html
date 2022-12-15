@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Dashboard</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+
+    <!-- Show navbar -->
+    <div class="topnav">
+      <a class="active" href="./login.html">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <div class="login-container">
+        <form class="topnav-form">
+          <button type="submit">Login</button>
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Show Form Fields -->
+    <div>
+      <div class="container">
+        <div class="header">
+            <h2>Students Form</h2>
+        </div>
+        <form class="form" id="form">
+          
+          <div class="form-control">
+            <label>ID</label>
+            <input type="text" placeholder="001" id="idNo">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+             <small>Error message</small>
+          </div>
+          
+          <div class="form-control">
+            <label>Name</label>
+            <input type="text" placeholder="John Doe" id="name">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+             <small>Error message</small>
+          </div>
+          
+          <div class="form-control">
+            <label>Birthdate</label>
+            <input type="date" placeholder="" id="birthdate">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+             <small>Error message</small>
+          </div>
+          
+          <div class="form-control">
+            <label>Phone Number</label>
+            <input type="number" placeholder="001" id="phoneNumber">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+             <small>Error message</small>
+          </div>
+          
+          <button class="submit">Submit</button>
+          <button class="reset">Reset</button>
+        </form>
+        </div>
+
+        <!-- SHow pushed database -->
+
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th>BIRTHDATE</th>
+                  <th>PHONE NUMBER</th>
+                  <th>Action</th>
+                </thead>
+                <tbody class="js-content-table">
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+    
+    
+    
+    <script src="./js/main.js"></script>
+</body>
+</html>
