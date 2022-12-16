@@ -6,7 +6,7 @@ const form = document.getElementById('form');
 const eleBtnReset = document.querySelector('.reset');
 const eleInputId = document.getElementById('loginId');
 const eleInputPassword = document.getElementById('password');
-const inputtedData =  JSON.parse(localStorage.getItem("localInputtedData")) || [];
+const inputtedData =  JSON.parse(localStorage.getItem("inputtedData")) || [];
 	
 	// Reset button
 	function handleResetForm() {
@@ -40,7 +40,7 @@ function checkLogin() {
     } else if(loginIdValue === '') {
         setErrorFor(loginId, 'Login Id cannot be left blank');
         isIdAuthenticated = false;
-    } else if (5 <= loginIdValue.length || loginIdValue.length <= 25) {
+    } else if (5 < loginIdValue.length || loginIdValue.length <= 25) {
         setErrorFor(loginId, 'Login Id should be 5-25 characters');
         isIdAuthenticated = false;
     } else if ((loginIdValue !== 'admin') && (loginIdValue !== 'admin2')) {
@@ -55,7 +55,7 @@ function checkLogin() {
     } else if(passwordValue === '') {
         setErrorFor(password, 'Login password cannot be left blank');
         isPasswordAuthenticated = false;
-    } else if (5 <= passwordValue.length || passwordValue.length <= 25) {
+    } else if (5 < passwordValue.length || passwordValue.length <= 25) {
         setErrorFor(password, 'Login password should be 5-25 characters');
         isPasswordAuthenticated = false;
     } else if ((passwordValue !== 'Aa@123456') && (passwordValue !=='admin123admin') ) {

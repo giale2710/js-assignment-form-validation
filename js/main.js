@@ -1,14 +1,18 @@
 function main()	{
-	let isValid = true //isValid will be used for renderDataTableafter the succession of checkInputs() func
+	let isValid = true //isValid will be used for renderDataTable() after the succession of checkInputs() func
+	let isEditFlag = {
+		flag: false,
+		indexEdit: -1,
+	  }
 
-
-	//variable for 
+	//variable declaratives
 	const form = document.getElementById('form');
 	const topnavForm = document.querySelector('.topnav-form')
 	const eleBtnReset = document.querySelector('.reset');
 	const eleInputIdNo = document.getElementById('idNo');
 	const eleInputName = document.getElementById('name');
 	const eleInputBirthdate = document.getElementById('birthdate');
+	const eleBirthYear = new Date(document.getElementById('birthdate'));
 	const eleInputPhoneNumber = document.getElementById('phoneNumber');
 	const eleContentTable = document.querySelector('.js-content-table')
 	const listData = JSON.parse(localStorage.getItem("listData")) || [];
@@ -32,6 +36,11 @@ function main()	{
 		const nameValue = eleInputName.value.trim();
 		const birthdateValue = eleInputBirthdate.value.trim();
 		const phoneNumberValue = eleInputPhoneNumber.value.trim();
+
+		let Cnow = new Date();//current Date
+		let computedAge = Cnow.getFullYear()-eleBirthYear.getFullYear();
+
+		console.log('Current year is ' + Cnow.getFullYear() + ', and the age value is ' + eleBirthYear);
 		
 		if(idNoValue === '') {
 			setErrorFor(eleInputIdNo, 'ID Number cannot be left blank');
@@ -57,6 +66,9 @@ function main()	{
 	
 		if(birthdateValue === '') {
 			setErrorFor(eleInputBirthdate, 'Birthdate cannot be blank');
+			isValid = false;
+		} else if (computedAge < 18 ) {
+			setErrorFor(eleInputBirthdate, 'Student must be at least 18yrs old');
 			isValid = false;
 		} else {
 			setSuccessFor(eleInputBirthdate);
@@ -95,6 +107,16 @@ function main()	{
 		formControl.className = 'form-control reset';
 		small.innerText = '';
 	}
+	//Push edit data to form
+	function handleUpdateFormData(formData) {
+		eleInputIdNo.value = formData?.idNo
+		eleInputName.value = formData?.name
+		eleInputBirthdate.value = formData?.birthdate
+		eleInputPhoneNumber.value = formData?.phoneNumber
+		
+		form.style.display = 'none';
+		form.style.display = 'block';
+	  }
 
 	// Function to render Input data into the table
 	function renderDataTable() {
@@ -108,12 +130,26 @@ function main()	{
 			<td>${data?.birthdate}</td>
 			<td>${data?.phoneNumber}</td>
 			<td>
-				<button data-index-delete="${index}"> Delete <button>
+				<button data-index-edit="${index}">Edit<button>
+				<button data-index-delete="${index}">Delete<button>
 			</td>
 			</tr>
 		`
 		})
 		eleContentTable.innerHTML = result
+
+		document.querySelectorAll(`[data-index-edit]`).forEach((eleBtn) => {
+			eleBtn.addEventListener('click', () => {
+			  const dataIndex = eleBtn.getAttribute("data-index-edit")
+			  isEditFlag = {
+				flag: true,
+				indexEdit: dataIndex
+			  }
+			  const currentDataEdit = listData[Number(dataIndex)]
+			  handleUpdateFormData(currentDataEdit)
+			  console.log('edit', currentDataEdit);
+			})
+		  })
 
 		document.querySelectorAll(`[data-index-delete]`).forEach((eleBtn) => {
 			eleBtn.addEventListener('click', () => {
@@ -139,7 +175,16 @@ function main()	{
 		checkInputs();
 		console.log('get isValid outside the func  === ' + isValid)
 		if (isValid === true) {
-			listData.push(formValue)
+			if (isEditFlag.flag) {
+				// Handle edit
+				listData[isEditFlag.indexEdit] = formValue
+				isEditFlag = {
+				  flag: false,
+				  indexEdit: -1,
+				}
+			  } else {
+				listData.push(formValue)
+			  }
 			localStorage.setItem('listData', JSON.stringify(listData))
 			
 			handleResetForm();
@@ -161,6 +206,5 @@ function main()	{
 main ()
 
 // existing: Current bugs
-// still log data while the form is still in error
 // still log an additional but unnessary button beside delete button
 // cannot validate age from data of birthdate value
