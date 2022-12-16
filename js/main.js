@@ -12,7 +12,6 @@ function main()	{
 	const eleInputIdNo = document.getElementById('idNo');
 	const eleInputName = document.getElementById('name');
 	const eleInputBirthdate = document.getElementById('birthdate');
-	const eleBirthYear = new Date(document.getElementById('birthdate'));
 	const eleInputPhoneNumber = document.getElementById('phoneNumber');
 	const eleContentTable = document.querySelector('.js-content-table')
 	const listData = JSON.parse(localStorage.getItem("listData")) || [];
@@ -36,11 +35,6 @@ function main()	{
 		const nameValue = eleInputName.value.trim();
 		const birthdateValue = eleInputBirthdate.value.trim();
 		const phoneNumberValue = eleInputPhoneNumber.value.trim();
-
-		let Cnow = new Date();//current Date
-		let computedAge = Cnow.getFullYear()-eleBirthYear.getFullYear();
-
-		console.log('Current year is ' + Cnow.getFullYear() + ', and the age value is ' + eleBirthYear);
 		
 		if(idNoValue === '') {
 			setErrorFor(eleInputIdNo, 'ID Number cannot be left blank');
@@ -66,9 +60,6 @@ function main()	{
 	
 		if(birthdateValue === '') {
 			setErrorFor(eleInputBirthdate, 'Birthdate cannot be blank');
-			isValid = false;
-		} else if (computedAge < 18 ) {
-			setErrorFor(eleInputBirthdate, 'Student must be at least 18yrs old');
 			isValid = false;
 		} else {
 			setSuccessFor(eleInputBirthdate);
